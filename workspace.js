@@ -13,8 +13,8 @@ function entryType( stat ) {
   }
 }
 
-function list( callback ) {
-  const dir = path.resolve( path.resolve( __dirname ) );
+function list( dirname, callback ) {
+  const dir = path.resolve( path.resolve( dirname ) );
 
   fs.readdir( dir, function( err, entries ) {
     if ( err ) {
