@@ -1,3 +1,9 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+exports.ready = function( global ) {
+  global.addEventListener( "DOMContentLoaded", function( event ) {
+    console.log( "DOMContentLoaded", event );
+  });
+
+  global.addEventListener( "hashchange", function( event ) {
+    console.log( "hashchang", event )
+  });
+}
