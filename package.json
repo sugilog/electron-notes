@@ -1,27 +1,24 @@
 {
-  "name": "electron-quick-start",
+  "name": "electron-notes",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Notes application",
   "main": "index.js",
   "scripts": {
     "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
+    "url": "git+https://github.com/sugilog/electron-notes.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "Electron"
   ],
-  "author": "GitHub",
+  "author": "sugilog",
   "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/electron/electron-quick-start/issues"
   },
-  "homepage": "https://github.com/electron/electron-quick-start#readme",
+  "homepage": "https://github.com/sugilog/electron-notes",
   "devDependencies": {
     "electron-prebuilt": "^1.1.1"
   }
