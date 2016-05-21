@@ -1,6 +1,7 @@
-const workspace = require( "./workspace.js" );
+import workspace from "./workspace";
 
 function listEntries() {
+  
   workspace.openDir( function( err, dir ) {
     if ( err ) {
       console.log( err );
@@ -18,7 +19,7 @@ function listEntries() {
   });
 }
 
-exports.ready = function( global ) {
+export function ready( global ) {
   global.addEventListener( "DOMContentLoaded", function( event ) {
     listEntries();
   });

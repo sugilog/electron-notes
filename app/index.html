@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <title>Notes</title>
     <script>
-      require( './script/renderer.js' ).ready( window );
+      require( "babel-register" )( {
+        ignore: /node_modules/
+      })
+      require( './script/renderer' ).ready( window );
     </script>
   </head>
   <body>

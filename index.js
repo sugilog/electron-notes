@@ -1,2 +1,4 @@
-require( "babel-register" );
-require( "./app/main.js" );
+require( "babel-register" )( {
+  only: /app/
+});
+require( "./app/main" );

@@ -1,6 +1,6 @@
-const fs = require( "fs" ),
-      path = require( "path" ),
-      {dialog}  = require( "electron" ).remote;
+import fs from "fs";
+import path from "path";
+import {remote} from "electron";
 
 function entryType( stat ) {
   if ( stat.isFile() ) {
@@ -17,7 +17,7 @@ function entryType( stat ) {
 function openDir( callback ) {
   // this: window
   // arg[0]: selected entry
-  dialog.showOpenDialog(
+  remote.dialog.showOpenDialog(
     {
       properties: [
         "openDirectory"
