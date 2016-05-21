@@ -1,5 +1,6 @@
 const fs = require( "fs" ),
-      path = require( "path" );
+      path = require( "path" ),
+      {dialog}  = require( "electron" ).remote;
 
 function entryType( stat ) {
   if ( stat.isFile() ) {
@@ -12,6 +13,21 @@ function entryType( stat ) {
     return "unsupported";
   }
 }
+
+function openDir( callback ) {
+  // this: window
+  // arg[0]: selected entry
+  dialog.showOpenDialog(
+    {
+      properties: [
+        "openDirectory"
+      ]
+    },
+    function( dirs ) {
+      callback( dirs[ 0 ] );
+    }
+  );
+};
 
 function list( dirname, callback ) {
   const dir = path.resolve( path.resolve( dirname ) );
@@ -38,5 +54,6 @@ function list( dirname, callback ) {
 }
 
 module.exports = {
+  openDir: openDir,
   list: list
 }
