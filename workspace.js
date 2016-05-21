@@ -24,7 +24,12 @@ function openDir( callback ) {
       ]
     },
     function( dirs ) {
-      callback( dirs[ 0 ] );
+      if ( typeof dirs === "undefined" ) {
+        callback( new Error( "Nothing selected" ) );
+      }
+      else {
+        callback( null, dirs[ 0 ] );
+      }
     }
   );
 };
