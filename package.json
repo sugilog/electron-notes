@@ -15,9 +15,6 @@
   ],
   "author": "sugilog",
   "license": "CC0-1.0",
-  "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
-  },
   "homepage": "https://github.com/sugilog/electron-notes",
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.8.0",
