@@ -7,7 +7,6 @@ import path from "path";
 let global;
 
 function currentDir( dir ) {
-  console.log( global, global.localStorage, dir );
   if ( typeof dir === "undefined" || dir === null ) {
     return global.localStorage.dir;
   }
@@ -53,7 +52,6 @@ export function ready( _global ) {
 
   global.addEventListener( "hashchange", ( event ) => {
     console.log( "hashchang", event )
-    console.log( global );
 
     var hashes = global.location.hash.split( "?" ),
         action = hashes.shift(),
@@ -66,8 +64,10 @@ export function ready( _global ) {
     case "#!/select-dir":
       selectDir();
       break;
+    case "#!/move-parent":
+      listEntries( path.resolve( currentDir(), ".." ) );
+      break;
     case "#!/open-directory":
-      console.log( currentDir(), query.path );
       listEntries( path.resolve( currentDir(), query.path ) );
       break;
     case "#!/open-file":
