@@ -40,6 +40,16 @@ export class FileInfo extends React.Component {
     return convert( this.props.size );
   }
 
+  entryUrl() {
+    switch( this.props.type ) {
+    case "directory":
+    case "file":
+      return "#!/open-" + this.props.type + "?path=" + this.props.path + "/" + this.props.name;
+    default:
+      return ""
+    }
+  }
+
   render() {
     return (
       <div>
@@ -47,18 +57,15 @@ export class FileInfo extends React.Component {
           <span>
             {this.props.type}
           </span>
-        </div>
-        <div>
           <strong>
-            {this.props.name}
-            ({this.humanizedSize()})
-            <small>
-              {this.props.path}
-            </small>
+            <a href={this.entryUrl()}>
+              {this.props.name}
+            </a>
           </strong>
         </div>
         <div>
           <span>
+            {this.humanizedSize()}
             {this.props.updatedAt}
           </span>
         </div>

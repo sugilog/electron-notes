@@ -3,41 +3,90 @@ import ReactDOM from "react-dom";
 import workspace from "./workspace";
 import {FileInfo, FileList} from "../view/view";
 
-function listEntries() {
+import path from "path";
+let global;
+
+function currentDir( dir ) {
+  console.log( global, global.localStorage, dir );
+  if ( typeof dir === "undefined" || dir === null ) {
+    return global.localStorage.dir;
+  }
+  else {
+    return global.localStorage.dir = dir;
+  }
+}
+
+function listEntries( dir ) {
+  currentDir( dir );
+
+  workspace.list( dir, ( err, entries ) => {
+    if ( err ) {
+      console.log( err );
+    }
+    else {
+      ReactDOM.render(
+        <FileList entries={entries} />,
+        document.querySelector( "#main" )
+      );
+    }
+  });
+}
+
+function selectDir() {
   workspace.openDir( ( err, dir ) => {
     if ( err ) {
       console.log( err );
     }
     else {
-      workspace.list( dir, ( err, entries ) => {
-        if ( err ) {
-          console.log( err );
-        }
-        else {
-          ReactDOM.render(
-            <FileList entries={entries} />,
-            document.querySelector( "#main" )
-          );
-        }
-      });
+      listEntries( dir );
     }
   });
 }
 
-export function ready( global ) {
+export function ready( _global ) {
+  global = _global;
+
   global.addEventListener( "DOMContentLoaded", ( event ) => {
-    listEntries();
+    selectDir();
+    location.hash = "#!";
   });
 
   global.addEventListener( "hashchange", ( event ) => {
     console.log( "hashchang", event )
+    console.log( global );
 
-    if ( "#!" === global.location.hash ) {
+    var hashes = global.location.hash.split( "?" ),
+        action = hashes.shift(),
+        query  = toQuery( hashes.join( "?" ) );
+
+    switch( action ) {
+    case "#!":
       // do nothing
+      break;
+    case "#!/select-dir":
+      selectDir();
+      break;
+    case "#!/open-directory":
+      console.log( currentDir(), query.path );
+      listEntries( path.resolve( currentDir(), query.path ) );
+      break;
+    case "#!/open-file":
+      break;
     }
-    else if ( "#!/open-dir" === global.location.hash ) {
-      listEntries();
-      global.location.hash = "#!";
-    }
+
+    global.location.hash = "#!";
   });
+}
+
+function toQuery( querystring ) {
+  var query = {};
+
+  querystring.split( "&" ).forEach( ( item ) => {
+    var pair  = item.split( "=" ),
+        key   = pair.shift(),
+        value = pair.join( "=" );
+    query[ key ] = value;
+  });
+
+  return query
 }
