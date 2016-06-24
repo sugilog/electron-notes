@@ -47,6 +47,7 @@ function list( dirname, callback ) {
             stat      = fs.statSync( entrypath );
 
         callback( null, {
+          ino:       stat.ino,
           name:      entry,
           path:      entrypath,
           size:      stat.size,

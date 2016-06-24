@@ -1,18 +1,27 @@
+import React from "react";
+import ReactDOM from "react-dom";
 import workspace from "./workspace";
+import {FileInfo, FileList} from "../view/view";
 
 function listEntries() {
-  
   workspace.openDir( function( err, dir ) {
     if ( err ) {
       console.log( err );
     }
     else {
+      var entries = [];
+
       workspace.list( dir, function( err, entry ) {
         if ( err ) {
           console.log( err );
         }
         else {
-          console.log( entry );
+          entries.push( entry );
+
+          ReactDOM.render(
+            <FileList entries={entries} />,
+            document.querySelector( "#main" )
+          );
         }
       });
     }
