@@ -35,26 +35,29 @@ function openDir( callback ) {
 };
 
 function list( dirname, callback ) {
-  const dir = path.resolve( path.resolve( dirname ) );
+  const entries = [],
+        dir = path.resolve( path.resolve( dirname ) );
 
-  fs.readdir( dir, function( err, entries ) {
+  fs.readdir( dir, function( err, entryNames ) {
     if ( err ) {
       callback( err );
     }
     else {
-      entries.forEach( function( entry ) {
-        var entrypath = path.resolve( dir, entry ),
-            stat      = fs.statSync( entrypath );
+      entryNames.forEach( function( entryName ) {
+        var entryPath = path.resolve( dir, entryName ),
+            stat      = fs.statSync( entryPath );
 
-        callback( null, {
+        entries.push( {
           ino:       stat.ino,
-          name:      entry,
-          path:      entrypath,
+          name:      entryName,
+          path:      entryPath,
           size:      stat.size,
           updatedAt: stat.mtime,
           type:      entryType( stat )
         });
       });
+
+      callback( null, entries );
     }
   });
 }

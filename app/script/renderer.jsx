@@ -9,15 +9,11 @@ function listEntries() {
       console.log( err );
     }
     else {
-      var entries = [];
-
-      workspace.list( dir, function( err, entry ) {
+      workspace.list( dir, function( err, entries ) {
         if ( err ) {
           console.log( err );
         }
         else {
-          entries.push( entry );
-
           ReactDOM.render(
             <FileList entries={entries} />,
             document.querySelector( "#main" )
