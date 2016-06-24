@@ -4,12 +4,12 @@ import workspace from "./workspace";
 import {FileInfo, FileList} from "../view/view";
 
 function listEntries() {
-  workspace.openDir( function( err, dir ) {
+  workspace.openDir( ( err, dir ) => {
     if ( err ) {
       console.log( err );
     }
     else {
-      workspace.list( dir, function( err, entries ) {
+      workspace.list( dir, ( err, entries ) => {
         if ( err ) {
           console.log( err );
         }
@@ -25,11 +25,11 @@ function listEntries() {
 }
 
 export function ready( global ) {
-  global.addEventListener( "DOMContentLoaded", function( event ) {
+  global.addEventListener( "DOMContentLoaded", ( event ) => {
     listEntries();
   });
 
-  global.addEventListener( "hashchange", function( event ) {
+  global.addEventListener( "hashchange", ( event ) => {
     console.log( "hashchang", event )
 
     if ( "#!" === global.location.hash ) {

@@ -23,7 +23,7 @@ function openDir( callback ) {
         "openDirectory"
       ]
     },
-    function( dirs ) {
+    ( dirs ) => {
       if ( typeof dirs === "undefined" ) {
         callback( new Error( "Nothing selected" ) );
       }
@@ -38,12 +38,12 @@ function list( dirname, callback ) {
   const entries = [],
         dir = path.resolve( path.resolve( dirname ) );
 
-  fs.readdir( dir, function( err, entryNames ) {
+  fs.readdir( dir, ( err, entryNames ) => {
     if ( err ) {
       callback( err );
     }
     else {
-      entryNames.forEach( function( entryName ) {
+      entryNames.forEach( ( entryName ) => {
         var entryPath = path.resolve( dir, entryName ),
             stat      = fs.statSync( entryPath );
 
