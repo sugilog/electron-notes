@@ -14,6 +14,10 @@ function entryType( stat ) {
   }
 }
 
+function isHidden( entryName ) {
+  return entryName[ 0 ] === ".";
+}
+
 function openDir( callback ) {
   // this: window
   // arg[0]: selected entry
@@ -44,6 +48,10 @@ function list( dirname, callback ) {
     }
     else {
       entryNames.forEach( ( entryName ) => {
+        if ( isHidden( entryName ) ) {
+          return
+        }
+
         var entryPath = path.resolve( dir, entryName ),
             stat      = fs.statSync( entryPath );
 
