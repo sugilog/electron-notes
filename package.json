@@ -19,6 +19,7 @@
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "electron-prebuilt": "^1.1.1",
+    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2"
   },
   "dependencies": {
