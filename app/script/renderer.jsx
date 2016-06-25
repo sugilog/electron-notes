@@ -52,7 +52,7 @@ export function ready( _global ) {
       <App />,
       document.querySelector( "#app" )
     );
-    // selectDir();
+    selectDir();
     location.hash = "#!";
   });
 
