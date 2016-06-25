@@ -49,8 +49,9 @@ export class EntryInfo extends React.Component {
     case "directory":
       return "#!/open-directory?path=" + this.props.path;
     case "file":
+      return "#!"
     default:
-      return ""
+      return "#!"
     }
   }
 
@@ -69,7 +70,18 @@ export class EntryInfo extends React.Component {
 
   render() {
     return (
-      <ListItem primaryText={this.primaryText()} secondaryText={this.secondaryText()} secondaryTextLines={2} />
+      <ListItem
+        primaryText={this.primaryText()}
+        secondaryText={this.secondaryText()}
+        secondaryTextLines={2}
+        onTouchTap={
+          function( event ) {
+            location.hash= this[ "data-hash" ];
+            return false;
+          }
+        }
+        data-hash={this.entryUrl()}
+      />
     )
   }
 }

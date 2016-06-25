@@ -24,8 +24,28 @@ export const MySideLayout = () => (
 
 export const MyHeaderLayout = () => (
   <section className="header">
-    <RaisedButton label="OPEN" style={buttonStyle}/>
-    <RaisedButton label="PARENT" style={buttonStyle}/>
+    <RaisedButton
+      label="OPEN"
+      style={buttonStyle}
+      onTouchTap={
+        function( event ) {
+          location.hash = this[ "data-hash" ];
+          return false;
+        }
+      }
+      data-hash={"#!/select-dir"}
+    />
+    <RaisedButton
+      label="PARENT"
+      style={buttonStyle}
+      onTouchTap={
+        function( event ) {
+          location.hash = this[ "data-hash" ];
+          return false;
+        }
+      }
+      data-hash={"#!/move-parent"}
+    />
   </section>
 );
 

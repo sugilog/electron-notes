@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 import workspace from "./workspace";
 import {App} from "../view/App";
 import {EntryList} from "../view/entry";
