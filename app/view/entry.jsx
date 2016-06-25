@@ -1,6 +1,10 @@
 import React from "react";
+import List from "material-ui/List";
+import ListItem from "material-ui/List/ListItem";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
-export class FileInfo extends React.Component {
+export class EntryInfo extends React.Component {
   humanizedSize() {
     const units = [
       "B",
@@ -50,30 +54,26 @@ export class FileInfo extends React.Component {
     }
   }
 
-  render() {
+  primaryText() {
+    return this.props.name;
+  }
+
+  secondaryText() {
     return (
       <div>
-        <div>
-          <span>
-            {this.props.type}
-          </span>
-          <strong>
-            <a href={this.entryUrl()}>
-              {this.props.name}
-            </a>
-          </strong>
-        </div>
-        <div>
-          <span>
-            {this.humanizedSize()}
-            {this.props.updatedAt}
-          </span>
-        </div>
+        <div>{this.props.updatedAt}</div>
+        <div>{this.props.type === "file" ? this.humanizedSize() : ""}</div>
       </div>
     )
   }
+
+  render() {
+    return (
+      <ListItem primaryText={this.primaryText()} secondaryText={this.secondaryText()} secondaryTextLines={2} />
+    )
+  }
 }
-FileInfo.defaultProps = {
+EntryInfo.defaultProps = {
   type: "file",
   name: "",
   path: ".",
@@ -81,16 +81,18 @@ FileInfo.defaultProps = {
   updatedAt: new Date().toLocaleString()
 }
 
-export class FileList extends React.Component {
+export class EntryList extends React.Component {
   render() {
     return (
-      <section class="entries">
-        {
-          this.props.entries.map( (entry) => {
-            return <FileInfo key={entry.ino} type={entry.type} size={entry.size} name={entry.name} path={entry.path} />
-          })
-        }
-      </section>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <List>
+          {
+            this.props.entries.map( (entry) => {
+              return <EntryInfo key={entry.ino} type={entry.type} size={entry.size} name={entry.name} path={entry.path} />
+            })
+          }
+        </List>
+      </MuiThemeProvider>
     )
   }
 }

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import workspace from "./workspace";
 import {App} from "../view/App";
-import {FileInfo, FileList} from "../view/view";
+import {EntryList} from "../view/entry";
 
 import path from "path";
 let global;
@@ -26,7 +26,7 @@ function listEntries( dir ) {
     }
     else {
       ReactDOM.render(
-        <FileList entries={entries} />,
+        <EntryList entries={entries} />,
         document.querySelector( ".entrylist" )
       );
     }
