@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import workspace from "./workspace";
+import {App} from "../view/App";
 import {FileInfo, FileList} from "../view/view";
 
 import path from "path";
@@ -25,7 +27,7 @@ function listEntries( dir ) {
     else {
       ReactDOM.render(
         <FileList entries={entries} />,
-        document.querySelector( "#main" )
+        document.querySelector( ".entrylist" )
       );
     }
   });
@@ -46,7 +48,11 @@ export function ready( _global ) {
   global = _global;
 
   global.addEventListener( "DOMContentLoaded", ( event ) => {
-    selectDir();
+    ReactDOM.render(
+      <App />,
+      document.querySelector( "#app" )
+    );
+    // selectDir();
     location.hash = "#!";
   });
 

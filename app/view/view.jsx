@@ -84,7 +84,7 @@ FileInfo.defaultProps = {
 export class FileList extends React.Component {
   render() {
     return (
-      <section class="files">
+      <section class="entries">
         {
           this.props.entries.map( (entry) => {
             return <FileInfo key={entry.ino} type={entry.type} size={entry.size} name={entry.name} path={entry.path} />
