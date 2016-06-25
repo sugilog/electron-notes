@@ -43,8 +43,8 @@ export class FileInfo extends React.Component {
   entryUrl() {
     switch( this.props.type ) {
     case "directory":
+      return "#!/open-directory?path=" + this.props.path;
     case "file":
-      return "#!/open-" + this.props.type + "?path=" + this.props.path + "/" + this.props.name;
     default:
       return ""
     }
@@ -76,8 +76,8 @@ export class FileInfo extends React.Component {
 FileInfo.defaultProps = {
   type: "file",
   name: "",
-  size: 0,
   path: ".",
+  size: 0,
   updatedAt: new Date().toLocaleString()
 }
 
@@ -87,7 +87,7 @@ export class FileList extends React.Component {
       <section class="files">
         {
           this.props.entries.map( (entry) => {
-            return <FileInfo key={entry.ino} type={entry.type} size={entry.size} name={entry.name} />
+            return <FileInfo key={entry.ino} type={entry.type} size={entry.size} name={entry.name} path={entry.path} />
           })
         }
       </section>

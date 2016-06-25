@@ -51,8 +51,6 @@ export function ready( _global ) {
   });
 
   global.addEventListener( "hashchange", ( event ) => {
-    console.log( "hashchang", event )
-
     var hashes = global.location.hash.split( "?" ),
         action = hashes.shift(),
         query  = toQuery( hashes.join( "?" ) );
@@ -68,9 +66,7 @@ export function ready( _global ) {
       listEntries( path.resolve( currentDir(), ".." ) );
       break;
     case "#!/open-directory":
-      listEntries( path.resolve( currentDir(), query.path ) );
-      break;
-    case "#!/open-file":
+      listEntries( path.resolve( query.path ) );
       break;
     }
 
