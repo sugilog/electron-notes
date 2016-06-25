@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
+import path from "path";
 import workspace from "./workspace";
+import helper from "./helper";
+
 import {App} from "../view/App";
 import {EntryList} from "../view/entry";
 
-import path from "path";
+injectTapEventPlugin();
+
 let global;
 
 function currentDir( dir ) {
@@ -62,7 +64,7 @@ export function ready( _global ) {
   global.addEventListener( "hashchange", ( event ) => {
     var hashes = global.location.hash.split( "?" ),
         action = hashes.shift(),
-        query  = toQuery( hashes.join( "?" ) );
+        query  = helper.toQuery( hashes.join( "?" ) );
 
     switch( action ) {
     case "#!":
@@ -81,17 +83,4 @@ export function ready( _global ) {
 
     global.location.hash = "#!";
   });
-}
-
-function toQuery( querystring ) {
-  var query = {};
-
-  querystring.split( "&" ).forEach( ( item ) => {
-    var pair  = item.split( "=" ),
-        key   = pair.shift(),
-        value = pair.join( "=" );
-    query[ key ] = value;
-  });
-
-  return query
 }
