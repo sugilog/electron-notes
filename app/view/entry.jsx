@@ -3,6 +3,7 @@ import List from "material-ui/List";
 import ListItem from "material-ui/List/ListItem";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import helper from "../script/helper";
 
 export class EntryInfo extends React.Component {
   humanizedSize() {
@@ -75,9 +76,8 @@ export class EntryInfo extends React.Component {
         secondaryText={this.secondaryText()}
         secondaryTextLines={2}
         onTouchTap={
-          function( event ) {
-            location.hash= this[ "data-hash" ];
-            return false;
+          function() {
+            helper.hashChange( this );
           }
         }
         data-hash={this.entryUrl()}
