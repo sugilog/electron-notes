@@ -56,7 +56,25 @@ export class TextView extends React.Component {
 
 export class ImageView extends React.Component {
   content() {
-    return <img src={this.props.path} />
+    const style = {
+      maxWidth: "100%"
+    };
+
+    return (
+      <img
+        src={this.props.path}
+        style={style}
+        onLoad={
+          function() {
+            let view = document.querySelector( ".imageview" ),
+                height = view.closest( ".main" ).getBoundingClientRect().height;
+
+            console.log( this, arguments, view, view.querySelector( "img" ), height );
+            view.querySelector( "img" ).style.maxHeight = height + "px";
+          }
+        }
+      />
+    );
   }
 
   render() {
