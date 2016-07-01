@@ -7,7 +7,7 @@ import workspace from "./workspace";
 import helper from "./helper";
 
 import {App} from "../view/App";
-import {EntryList} from "../view/entry";
+import {EntryList} from "../view/Entry";
 
 injectTapEventPlugin();
 
