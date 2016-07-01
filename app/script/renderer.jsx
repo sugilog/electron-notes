@@ -8,7 +8,7 @@ import helper from "./helper";
 
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
-import {TextView, ImageView} from "../view/EntryView";
+import {MarkdownView, TextView, ImageView} from "../view/EntryView";
 
 injectTapEventPlugin();
 
@@ -95,7 +95,7 @@ export function ready( _global ) {
             break;
           case "markdown":
             ReactDOM.render(
-              <TextView path={query.path} />,
+              <MarkdownView path={query.path} />,
               document.querySelector( ".main" )
             );
             break;
