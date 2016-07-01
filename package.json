@@ -25,6 +25,7 @@
   "dependencies": {
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
+    "file-type": "^3.8.0",
     "material-ui": "^0.15.1",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",

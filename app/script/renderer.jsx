@@ -8,7 +8,7 @@ import helper from "./helper";
 
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
-import {TextView} from "../view/TextView";
+import {TextView, ImageView} from "../view/EntryView";
 
 injectTapEventPlugin();
 
@@ -81,13 +81,28 @@ export function ready( _global ) {
       listEntries( path.resolve( query.path ) );
       break;
     case "#!/open-file":
-      switch ( path.extname( query.path ) ) {
-      case ".md":
-        ReactDOM.render(
-          <TextView path={query.path} />,
-          document.querySelector( ".main" )
-        );
-      }
+      helper.filetype( query.path, function( err, filetype ) {
+        if ( err ) {
+          console.log( err.message );
+        }
+        else {
+          switch( filetype.type ) {
+          case "image":
+            ReactDOM.render(
+              <ImageView path={query.path} />,
+              document.querySelector( ".main" )
+            );
+            break;
+          case "markdown":
+            ReactDOM.render(
+              <TextView path={query.path} />,
+              document.querySelector( ".main" )
+            );
+            break;
+          }
+        }
+      });
+      break;
     }
 
     global.location.hash = "#!";
