@@ -8,6 +8,7 @@ import helper from "./helper";
 
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
+import {TextView} from "../view/TextView";
 
 injectTapEventPlugin();
 
@@ -79,6 +80,14 @@ export function ready( _global ) {
     case "#!/open-directory":
       listEntries( path.resolve( query.path ) );
       break;
+    case "#!/open-file":
+      switch ( path.extname( query.path ) ) {
+      case ".md":
+        ReactDOM.render(
+          <TextView path={query.path} />,
+          document.querySelector( ".main" )
+        );
+      }
     }
 
     global.location.hash = "#!";

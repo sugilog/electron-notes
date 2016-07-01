@@ -15,7 +15,7 @@ export class EntryInfo extends React.Component {
     case "directory":
       return "#!/open-directory?path=" + this.props.path;
     case "file":
-      return "#!"
+      return "#!/open-file?path=" + this.props.path;
     default:
       return "#!"
     }
