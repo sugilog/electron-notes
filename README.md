@@ -11,7 +11,7 @@ Be care, this repository is underconstruction.
 2. Clone this repository.
 3. Run `npm install`.
 4. Run `npm install -g gulp`.
-5. Run `gulp babel`.
+5. Run `gulp copy`.
 6. Run `npm start`.
 
 
