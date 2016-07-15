@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <title>Notes</title>
     <script>
+      var XPre = document.registerElement('x-pre', {
+        prototype: Object.create(HTMLPreElement.prototype)
+      });
       require( "./script/renderer" ).ready( window );
     </script>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+    <style>
+      x-pre {
+        display: block;
+        white-space: pre-wrap;
+        margin-bottom: 1em;
+      }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500" rel="stylesheet" type="text/css">
+    <link href="./stylesheet/github-markdown.css" rel="stylesheet" type="text/css">
   </head>
   <body style="margin: 0; padding: 0;">
     <div id="app">

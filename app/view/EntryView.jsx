@@ -5,22 +5,24 @@ import fs from "fs";
 import kramed from "kramed";
 
 kramed.setOptions( {
-  renderer: new kramed.Renderer(),
+  renderer:    new kramed.Renderer(),
   gfm:         true,
   tables:      true,
   breaks:      true,
-  pedantic:    false,
   sanitize:    true,
-  smartLists:  true,
-  smartypants: false
+  smartLists:  true
 });
 
+kramed.Renderer.prototype.paragraph = function(text) {
+  return '<x-pre>' + text + '</x-pre>\n';
+};
 
 export class MarkdownView extends React.Component {
   content() {
     const content = fs.readFileSync( this.props.path, "utf8" );
     return (
-      <pre
+      <div
+        className="markdown-body"
         dangerouslySetInnerHTML={ { __html: kramed( content ) } }
       />
     );
