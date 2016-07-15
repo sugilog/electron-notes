@@ -33,6 +33,7 @@ export class MarkdownView extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div className="entryContent textview">
+          <base href={ this.props.path } />
           {this.content()}
         </div>
       </MuiThemeProvider>
@@ -50,6 +51,7 @@ export class TextView extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div className="entryContent textview">
+          <base href={ this.props.path } />
           {this.content()}
         </div>
       </MuiThemeProvider>
@@ -84,6 +86,7 @@ export class ImageView extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div className="entryContent imageview">
+          <base href={ this.props.path } />
           {this.content()}
         </div>
       </MuiThemeProvider>
