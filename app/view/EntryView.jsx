@@ -23,6 +23,7 @@ export class MarkdownView extends React.Component {
     return (
       <div
         className="markdown-body"
+        style={ { padding: 10 } }
         dangerouslySetInnerHTML={ { __html: kramed( content ) } }
       />
     );
