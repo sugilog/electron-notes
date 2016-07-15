@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "css": "cp -f ./github-markdown-css/github-markdown.css ./app/stylesheet/"
+    "css": "cp -f ./github-markdown-css/github-markdown.css ./app/"
   },
   "repository": {
     "type": "git",

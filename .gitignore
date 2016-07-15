@@ -9,8 +9,5 @@ build/Release
 # Dependency directory
 node_modules
 
-# Babel
-app/**/*.js
-
-# make from submodule
-app/stylesheet/github-markdown.css
+# Babel / Copy
+app
