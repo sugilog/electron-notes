@@ -4,7 +4,8 @@
   "description": "Notes application",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "css": "cp -f ./github-markdown-css/github-markdown.css ./app/stylesheet/"
   },
   "repository": {
     "type": "git",
