@@ -1,18 +1,7 @@
 import fs from "fs";
 import path from "path";
 import {remote} from "electron";
-
-function entryType( stat ) {
-  if ( stat.isFile() ) {
-    return "file";
-  }
-  else if ( stat.isDirectory ) {
-    return "directory";
-  }
-  else {
-    return "unsupported";
-  }
-}
+import helper from "./helper"
 
 function isHidden( entryName ) {
   return entryName[ 0 ] === ".";
@@ -39,8 +28,8 @@ function openDir( callback ) {
 };
 
 function list( dirname, callback ) {
-  const entries = [],
-        dir = path.resolve( path.resolve( dirname ) );
+  const dir = path.resolve( path.resolve( dirname ) );
+  let   entries = [];
 
   fs.readdir( dir, ( err, entryNames ) => {
     if ( err ) {
@@ -52,8 +41,8 @@ function list( dirname, callback ) {
           return
         }
 
-        var entryPath = path.resolve( dir, entryName ),
-            stat      = fs.statSync( entryPath );
+        const entryPath = path.resolve( dir, entryName ),
+              stat = fs.statSync( entryPath );
 
         entries.push( {
           ino:       stat.ino,
@@ -61,7 +50,7 @@ function list( dirname, callback ) {
           path:      entryPath,
           size:      stat.size,
           updatedAt: stat.mtime,
-          type:      entryType( stat )
+          type:      helper.statType( entryPath )
         });
       });
 

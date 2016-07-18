@@ -1,3 +1,5 @@
+import {shell} from "electron";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -106,5 +108,36 @@ export function ready( _global ) {
     }
 
     global.location.hash = "#!";
+  });
+
+  global.addEventListener( "click", ( event ) => {
+    if ( event.target.nodeName.toLowerCase() === "a" ) {
+      if ( /^file:\/\/\//.test( event.target.href ) ) {
+        let filepath = event.target.href.replace( /^file:\/\//, "" );
+
+        console.log( filepath );
+
+        switch( helper.statType( filepath ) ) {
+        case "file":
+          location.hash = "#!/open-file?path=" + filepath;
+          break;
+        case "directory":
+          location.hash = "#!/open-directory?path=" + filepath;
+          break;
+        default:
+          console.log( "Unsupported type", filepath );
+          break;
+        }
+
+      }
+      else if ( /^https?:\/\//.test( event.target.href ) ) {
+        shell.openExternal( event.target.href );
+      }
+      else {
+        console.log( "Not support href", event.target.href );
+      }
+
+      event.preventDefault();
+    }
   });
 }

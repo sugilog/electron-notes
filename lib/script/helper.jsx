@@ -71,6 +71,20 @@ function detectFileTypeByRead( filepath, callback ) {
   });
 }
 
+helper.statType = ( filepath ) => {
+  const stat = fs.statSync( filepath );
+
+  if ( stat.isFile() ) {
+    return "file";
+  }
+  else if ( stat.isDirectory ) {
+    return "directory";
+  }
+  else {
+    return "unsupported";
+  }
+};
+
 helper.filetype = ( filepath, callback ) => {
   const supported = [
           { type: "markdown", extname: [ ".md" ] },
