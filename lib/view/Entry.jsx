@@ -1,7 +1,6 @@
 import React from "react";
 import List from "material-ui/List";
 import ListItem from "material-ui/List/ListItem";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import helper from "../script/helper";
 
@@ -61,7 +60,7 @@ EntryInfo.defaultProps = {
 export class EntryList extends React.Component {
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider>
         <List>
           {
             this.props.entries.map( (entry) => {

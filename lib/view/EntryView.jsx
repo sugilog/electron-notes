@@ -1,5 +1,4 @@
 import React from "react";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import fs from "fs";
 import kramed from "kramed";
@@ -31,7 +30,7 @@ export class MarkdownView extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider>
         <div className="entryContent textview">
           <base href={ this.props.path } />
           {this.content()}
@@ -49,7 +48,7 @@ export class TextView extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider>
         <div className="entryContent textview">
           <base href={ this.props.path } />
           {this.content()}
@@ -83,7 +82,7 @@ export class ImageView extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider>
         <div className="entryContent imageview">
           <base href={ this.props.path } />
           {this.content()}

@@ -1,7 +1,7 @@
 import {shell} from "electron";
 
 import React from "react";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
+import AppTheme from "./AppTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ModeEditAsset from "material-ui/svg-icons/editor/mode-edit";
@@ -19,7 +19,7 @@ export class MarkdownController extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider muiTheme={AppTheme}>
         <div className="entryConntroller">
           <FloatingActionButton
             style={buttonStyle}
