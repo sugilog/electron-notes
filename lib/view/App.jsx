@@ -35,6 +35,12 @@ const buttonStyle = {
         right:    0,
         bottom:   0,
         overflow: "scroll"
+      },
+      mainControllerLayout = {
+        position: "absolute",
+        top:      0,
+        right:    0,
+        padding:  10
       };
 
 
@@ -44,6 +50,7 @@ export const App = () => (
       <MySideHeaderLayout />
       <MySideLayout />
       <MyMainLayout />
+      <MyMainControllerLayout />
     </div>
   </MuiThemeProvider>
 );
@@ -92,3 +99,7 @@ export const MyEntryListLayout = () => (
 export const MyMainLayout = () => (
   <section className="main" style={mainStyle} />
 );
+
+export const MyMainControllerLayout = () => (
+  <section className="mainController" style={mainControllerLayout} />
+)

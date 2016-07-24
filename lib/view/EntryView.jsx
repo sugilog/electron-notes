@@ -74,7 +74,6 @@ export class ImageView extends React.Component {
             let view = document.querySelector( ".imageview" ),
                 height = view.closest( ".main" ).getBoundingClientRect().height;
 
-            console.log( this, arguments, view, view.querySelector( "img" ), height );
             view.querySelector( "img" ).style.maxHeight = height + "px";
           }
         }

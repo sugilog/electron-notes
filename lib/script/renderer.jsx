@@ -11,6 +11,7 @@ import helper from "./helper";
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
 import {MarkdownView, TextView, ImageView} from "../view/EntryView";
+import {MarkdownController, ImageController} from "../view/EntryController";
 
 injectTapEventPlugin();
 
@@ -94,11 +95,19 @@ export function ready( _global ) {
               <ImageView path={query.path} />,
               document.querySelector( ".main" )
             );
+            ReactDOM.render(
+              <ImageController path={query.path} />,
+              document.querySelector( ".mainController" )
+            );
             break;
           case "markdown":
             ReactDOM.render(
               <MarkdownView path={query.path} />,
               document.querySelector( ".main" )
+            );
+            ReactDOM.render(
+              <MarkdownController path={query.path} />,
+              document.querySelector( ".mainController" )
             );
             break;
           }
@@ -114,8 +123,6 @@ export function ready( _global ) {
     if ( event.target.nodeName.toLowerCase() === "a" ) {
       if ( /^file:\/\/\//.test( event.target.href ) ) {
         let filepath = event.target.href.replace( /^file:\/\//, "" );
-
-        console.log( filepath );
 
         switch( helper.statType( filepath ) ) {
         case "file":
