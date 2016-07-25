@@ -9,7 +9,8 @@ import RefreshAsset from "material-ui/svg-icons/navigation/refresh";
 import helper from "../script/helper";
 
 const buttonStyle = {
-        marginRight: 24
+        marginRight: 24,
+        opacity: 0.7
       };
 
 export class MarkdownController extends React.Component {
