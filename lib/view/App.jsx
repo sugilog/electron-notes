@@ -18,7 +18,7 @@ const buttonStyle = {
         top:      50,
         left:     0,
         bottom:   0,
-        width:    250,
+        width:    350,
         overflow: "scroll"
       },
       entrylistStyle = {
@@ -31,7 +31,7 @@ const buttonStyle = {
       mainStyle = {
         position: "absolute",
         top:      0,
-        left:     250,
+        left:     350,
         right:    0,
         bottom:   0,
         overflow: "scroll"
