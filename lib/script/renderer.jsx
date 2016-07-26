@@ -114,6 +114,9 @@ export function ready( _global ) {
         }
       });
       break;
+    case "#!/new-file":
+      console.log( "Not implemented yet." );
+      break;
     }
 
     global.location.hash = "#!";
