@@ -1,6 +1,7 @@
 import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import RaisedButton from "material-ui/RaisedButton";
+import helper from "../script/helper";
 
 const buttonStyle = {
         margin: 12,
@@ -71,17 +72,32 @@ export const MyHeaderLayout = () => (
     <RaisedButton
       label="OPEN"
       style={buttonStyle}
-      href="#!/select-dir"
+      onTouchTap={
+        function() {    
+          helper.hashChange( this );    
+        }    
+      }
+      data-hash="#!/select-dir"
     />
     <RaisedButton
       label="PARENT"
       style={buttonStyle}
-      href="#!/move-parent"
+      onTouchTap={
+        function() {    
+          helper.hashChange( this );    
+        }    
+      }
+      data-hash="#!/move-parent"
     />
     <RaisedButton
       label="NEW"
       style={buttonStyle}
-      href="#!/new-file"
+      onTouchTap={
+        function() {    
+          helper.hashChange( this );    
+        }    
+      }
+      data-hash="#!/new-file"
     />
   </div>
 );
