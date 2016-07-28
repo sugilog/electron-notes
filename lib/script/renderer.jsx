@@ -10,7 +10,7 @@ import helper from "./helper";
 
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
-import {MarkdownView, TextView, ImageView} from "../view/EntryView";
+import {MarkdownView, TextView, ImageView, PdfView} from "../view/EntryView";
 import {MarkdownController, ImageController} from "../view/EntryController";
 
 injectTapEventPlugin();
@@ -110,6 +110,11 @@ export function ready( _global ) {
               document.querySelector( ".mainController" )
             );
             break;
+          case "pdf":
+            ReactDOM.render(
+              <PdfView path={query.path} />,
+              document.querySelector( ".main" )
+            );
           }
         }
       });
