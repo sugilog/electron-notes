@@ -51,9 +51,3 @@ export class MarkdownController extends React.Component {
     )
   }
 }
-
-export class ImageController extends React.Component {
-  render() {
-    return <div />
-  }
-}

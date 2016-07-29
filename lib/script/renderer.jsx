@@ -10,8 +10,8 @@ import helper from "./helper";
 
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
-import {MarkdownView, TextView, ImageView, PdfView} from "../view/EntryView";
-import {MarkdownController, ImageController} from "../view/EntryController";
+import {MarkdownView, TextView, ImageView, PdfView, EpubView} from "../view/EntryView";
+import {MarkdownController} from "../view/EntryController";
 
 injectTapEventPlugin();
 
@@ -89,33 +89,27 @@ export function ready( _global ) {
           console.log( err.message );
         }
         else {
+          let view, controller;
+
           switch( filetype.type ) {
           case "image":
-            ReactDOM.render(
-              <ImageView path={query.path} />,
-              document.querySelector( ".main" )
-            );
-            ReactDOM.render(
-              <ImageController path={query.path} />,
-              document.querySelector( ".mainController" )
-            );
+            view = <ImageView path={query.path} />;
+            controller = <ImageController path={query.path} />;
             break;
           case "markdown":
-            ReactDOM.render(
-              <MarkdownView path={query.path} />,
-              document.querySelector( ".main" )
-            );
-            ReactDOM.render(
-              <MarkdownController path={query.path} />,
-              document.querySelector( ".mainController" )
-            );
+            view = <MarkdownView path={query.path} />;
+            controller = <MarkdownController path={query.path} />;
             break;
           case "pdf":
-            ReactDOM.render(
-              <PdfView path={query.path} />,
-              document.querySelector( ".main" )
-            );
+            view = <PdfView path={query.path} />;
+            break;
+          case "epub":
+            view = <EpubView path={query.path} />;
+            break;
           }
+
+          ReactDOM.render( view, document.querySelector( ".main" ) )
+          controller && ReactDOM.render( controller, document.querySelector( ".mainController" ) );
         }
       });
       break;

@@ -88,6 +88,7 @@ helper.statType = ( filepath ) => {
 helper.filetype = ( filepath, callback ) => {
   const supported = [
           { type: "pdf",      extname: [ ".pdf" ] },
+          { type: "epub",     extname: [ ".epub" ] },
           { type: "markdown", extname: [ ".md" ] },
           { type: "image",    extname: [ ".png" ] },
           { type: "image",    pattern: /^image/ }
