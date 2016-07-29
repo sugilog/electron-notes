@@ -109,22 +109,33 @@ export class PdfView extends React.Component {
       <iframe
         style={style}
         src={viewer}
-        onLoad={
-          function() {
-            function resize() {
-              let view = document.querySelector( ".pdfview" ),
-                  rect = view.closest( ".main" ).getBoundingClientRect();
-
-              view.querySelector( "iframe" ).style.width  = rect.width  + "px";
-              view.querySelector( "iframe" ).style.height = rect.height + "px";
-            }
-
-            window.onresize = resize;
-            resize();
-          }
-        }
       />
     )
+  }
+
+  resizable() {
+    function resize() {
+      let view = document.querySelector( ".pdfview" ),
+          rect = view.closest( ".main" ).getBoundingClientRect();
+
+      view.querySelector( "iframe" ).style.width  = rect.width  + "px";
+      view.querySelector( "iframe" ).style.height = rect.height + "px";
+    }
+
+    window.onresize = resize;
+    resize();
+  }
+
+  componentDidMount() {
+    this.resizable();
+  }
+
+  componentDidUpdate() {
+    this.resizable();
+  }
+
+  componentWillUnmount() {
+    window.onresize = null;
   }
 
   render() {
@@ -140,12 +151,14 @@ export class PdfView extends React.Component {
 }
 
 export class EpubView extends React.Component {
-  append() {
-    const webroot = "http://localhost:" + PORT;
-    let view = document.querySelector( ".epubview" ),
-        epub = new EPUB( this.props.path, webroot + "/image/", webroot + "/file/" );
+  closeServer() {
+    if ( SERVER ) {
+      SERVER.close();
+      SERVER = null;
+    }
+  }
 
-
+  openServer( epub ) {
     function handleRequest( request, response ) {
       let promise;
       const resources = request.url.split( "/", 3 ),
@@ -175,14 +188,17 @@ export class EpubView extends React.Component {
         response.end( resource.content );
       });
     }
-
-    if ( SERVER ) {
-      SERVER.close();
-      SERVER = null;
-    }
-
     SERVER = HTTP.createServer( handleRequest );
     SERVER.listen( PORT );
+  }
+
+  append() {
+    const webroot = "http://localhost:" + PORT;
+    let view = document.querySelector( ".epubview" ),
+        epub = new EPUB( this.props.path, webroot + "/image/", webroot + "/file/" );
+
+    this.closeServer();
+    this.openServer( epub );
 
     epub.on( "end", () => {
       console.log( epub );
@@ -218,6 +234,10 @@ export class EpubView extends React.Component {
 
   componentDidUpdate() {
     this.append();
+  }
+
+  componentWillUnmount() {
+    this.closeServer()
   }
 
   render() {
