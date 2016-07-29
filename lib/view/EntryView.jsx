@@ -151,8 +151,15 @@ export class PdfView extends React.Component {
 }
 
 export class EpubView extends React.Component {
+  content() {
+    return (
+      <div className="epubcontent" />
+    )
+  }
+
   closeServer() {
     if ( SERVER ) {
+      console.log( "Close server" );
       SERVER.close();
       SERVER = null;
     }
@@ -161,7 +168,7 @@ export class EpubView extends React.Component {
   openServer( epub ) {
     function handleRequest( request, response ) {
       let promise;
-      const resources = request.url.split( "/", 3 ),
+      const resources  = request.url.split( "/", 3 ),
             type       = resources[ 1 ],
             resourceId = resources[ 2 ];
 
@@ -183,25 +190,32 @@ export class EpubView extends React.Component {
         }
 
       });
-      promise.then( ( resource ) => {
-        response.writeHead( 200, { 'Content-Type': resource.type } );
-        response.end( resource.content );
-      });
+      promise.then(
+        ( resource ) => {
+          response.writeHead( 200, { 'Content-Type': resource.type } );
+          response.end( resource.content );
+        },
+        ( err ) => {
+          console.log( err );
+          response.writeHead( 500 );
+          response.end( " " );
+        }
+      );
     }
     SERVER = HTTP.createServer( handleRequest );
+    SERVER.setTimeout( 2000 );
     SERVER.listen( PORT );
   }
 
   append() {
     const webroot = "http://localhost:" + PORT;
-    let view = document.querySelector( ".epubview" ),
+    let view = document.querySelector( ".epubview > .epubcontent" ),
         epub = new EPUB( this.props.path, webroot + "/image/", webroot + "/file/" );
 
     this.closeServer();
-    this.openServer( epub );
 
     epub.on( "end", () => {
-      console.log( epub );
+      this.openServer( epub );
 
       for ( let key in epub.manifest ) {
         if ( /css/.test( epub.manifest[ key ][ "media-type" ] ) ) {
@@ -217,6 +231,19 @@ export class EpubView extends React.Component {
         epub.getChapter( chapter.id, ( err, text ) => {
           let article = document.createElement( "article" );
           article.innerHTML = text;
+          article.querySelectorAll( "image" ).forEach( ( img ) => {
+            const attr = "xlink:href";
+            let href;
+
+            if ( href = img.getAttribute( attr ) ) {
+              for ( let key in epub.manifest ) {
+                if ( epub.manifest[ key ].href === href ) {
+                  img.setAttribute( attr, webroot + "/image/" + epub.manifest[ key ].id + "/" + href );
+                }
+              }
+            }
+          });
+
           view.appendChild( article );
 
           article.querySelectorAll( "img" ).forEach( ( img ) => {
@@ -233,6 +260,8 @@ export class EpubView extends React.Component {
   }
 
   componentDidUpdate() {
+    let view = document.querySelector( ".epubview > .epubcontent" );
+    view.innerHTML = "";
     this.append();
   }
 
@@ -245,6 +274,7 @@ export class EpubView extends React.Component {
       <MuiThemeProvider>
         <div className="entryContent epubview">
           <base href={ this.props.path } />
+          {this.content()}
         </div>
       </MuiThemeProvider>
     )
