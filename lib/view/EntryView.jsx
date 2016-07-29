@@ -3,7 +3,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import path from "path";
 import fs from "fs";
 import kramed from "kramed";
-import {PDFJS} from "pdfjs-dist";
+// import {PDFJS} from "pdfjs-dist";
 
 kramed.setOptions( {
   renderer:    new kramed.Renderer(),
@@ -96,8 +96,30 @@ export class ImageView extends React.Component {
 
 export class PdfView extends React.Component {
   content() {
+    const viewer = "file://" + path.resolve( "pdfjs", "web", "viewer.html" ) + "?file=" + this.props.path,
+          style = {
+            border: 0
+          }
+
     return (
-      <PdfCanvasComponent path={ this.props.path } />
+      <iframe
+        style={style}
+        src={viewer}
+        onLoad={
+          function() {
+            function resize() {
+              let view = document.querySelector( ".pdfview" ),
+                  rect = view.closest( ".main" ).getBoundingClientRect();
+
+              view.querySelector( "iframe" ).style.width  = rect.width  + "px";
+              view.querySelector( "iframe" ).style.height = rect.height + "px";
+            }
+
+            window.onresize = resize;
+            resize();
+          }
+        }
+      />
     )
   }
 
@@ -109,43 +131,6 @@ export class PdfView extends React.Component {
           {this.content()}
         </div>
       </MuiThemeProvider>
-    )
-  }
-}
-
-class PdfCanvasComponent extends React.Component {
-  componentDidMount() {
-    this.updateCanvas();
-  }
-
-  componentDidUpdate() {
-    this.updateCanvas();
-  }
-
-  updateCanvas() {
-    const context = this.refs.canvas.getContext( "2d" ),
-          scale   = 1.0,
-          canvas  = this.refs.canvas;
-
-    PDFJS.disableWorker = true;
-    PDFJS.workerSrc = path.resolve( "node_modules/pdfjs-dist/build/pdf.worker.js" );
-    PDFJS.getDocument( this.props.path )
-      .then( ( pdf ) => {
-        pdf.getPage( 1 )
-          .then( ( page ) => {
-            let viewport = page.getViewport( scale );
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            page.render( { canvasContext: context, viewport: viewport } );
-          });
-      });
-    console.log( this.props.path, 1 );
-  }
-
-  render() {
-    return (
-      <canvas ref="canvas" />
     )
   }
 }

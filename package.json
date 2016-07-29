@@ -4,7 +4,8 @@
   "description": "Notes application",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "setup": "gulp copy; cd pdfjs && npm install;"
   },
   "repository": {
     "type": "git",
