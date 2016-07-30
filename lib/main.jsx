@@ -9,8 +9,7 @@ function createWindow () {
   mainWindow = new BrowserWindow();
   mainWindow.maximize();
   mainWindow.loadURL( `file://${__dirname}/index.html` );
-  // FIXME
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on( "closed", () => {
     mainWindow = null;
