@@ -1,5 +1,6 @@
-var gulp  = require( "gulp" ),
-    babel = require( "gulp-babel" );
+var gulp   = require( "gulp" ),
+    babel  = require( "gulp-babel" ),
+    rename = require( "gulp-rename" );
 
 gulp.task( "babel", function() {
   gulp.src( "./lib/**/*.jsx" )
@@ -14,6 +15,10 @@ gulp.task( "html", function() {
 
 gulp.task( "css", function() {
   gulp.src( "./github-markdown-css/github-markdown.css" )
+    .pipe( gulp.dest( "./app/" ) );
+
+  gulp.src( "./node_modules/highlight.js/styles/monokai.css" )
+    .pipe( rename( { basename: "highlight.js", extname: ".css" } ) )
     .pipe( gulp.dest( "./app/" ) );
 });
 

@@ -3,6 +3,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import path from "path";
 import fs from "fs";
 import kramed from "kramed";
+import highlightjs from "highlight.js";
 import EPUB from "epub";
 
 import HTTP from "http";
@@ -15,7 +16,10 @@ kramed.setOptions( {
   tables:      true,
   breaks:      true,
   sanitize:    true,
-  smartLists:  true
+  smartLists:  true,
+  highlight:   ( code, lang, callback ) => {
+    callback( null, highlightjs.highlightAuto( code ).value );
+  }
 });
 
 kramed.Renderer.prototype.paragraph = function(text) {
@@ -23,15 +27,44 @@ kramed.Renderer.prototype.paragraph = function(text) {
 };
 
 export class MarkdownView extends React.Component {
+  constructor( props ) {
+    super( props );
+    this.state = { path: props.path };
+  }
+
   content() {
-    const content = fs.readFileSync( this.props.path, "utf8" );
     return (
       <div
         className="markdown-body"
         style={ { padding: 10 } }
-        dangerouslySetInnerHTML={ { __html: kramed( content ) } }
+        dangerouslySetInnerHTML={ { __html: this.state.content } }
       />
     );
+  }
+
+  append() {
+    const text = fs.readFileSync( this.props.path, "utf8" );
+
+    kramed( text, ( err, converted ) => {
+      if ( err ) {
+        reject( err );
+      }
+      else {
+        this.setState( { content: converted } );
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.setState( { path: this.props.path } );
+    this.append();
+  }
+
+  componentDidUpdate() {
+    if ( this.state.path !== this.props.path ) {
+      this.append();
+      this.setState( { path: this.props.path } );
+    }
   }
 
   render() {
