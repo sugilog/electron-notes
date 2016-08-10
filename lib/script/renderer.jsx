@@ -10,7 +10,7 @@ import helper from "./helper";
 
 import {App} from "../view/App";
 import {EntryList} from "../view/Entry";
-import {MarkdownView, TextView, ImageView, PdfView, EpubView} from "../view/EntryView";
+import {MarkdownView, TextView, ProgramSourceView, ImageView, PdfView, EpubView} from "../view/EntryView";
 import {MarkdownController} from "../view/EntryController";
 
 injectTapEventPlugin();
@@ -99,6 +99,9 @@ export function ready( _global ) {
           case "markdown":
             view = <MarkdownView path={query.path} />;
             controller = <MarkdownController path={query.path} />;
+            break;
+          case "program":
+            view = <ProgramSourceView path={query.path} lang={filetype.lang} />;
             break;
           case "pdf":
             view = <PdfView path={query.path} />;

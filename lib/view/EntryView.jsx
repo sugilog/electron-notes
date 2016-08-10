@@ -97,6 +97,55 @@ export class TextView extends React.Component {
   }
 }
 
+export class ProgramSourceView extends React.Component {
+  constructor( props ) {
+    super( props );
+    this.state = { path: props.path };
+  }
+
+  content() {
+    return (
+      <div className="markdown-body">
+        <pre>
+          <code
+            className={"lang-" + this.props.lang}
+            style={ { padding: 10 } }
+            dangerouslySetInnerHTML={ { __html: this.state.content } }
+          />
+        </pre>
+      </div>
+    );
+  }
+
+  append() {
+    const text = fs.readFileSync( this.props.path, "utf8" );
+    this.setState( { content: highlightjs.highlightAuto( text ).value } );
+  }
+
+  componentDidMount() {
+    this.setState( { path: this.props.path } );
+    this.append();
+  }
+
+  componentDidUpdate() {
+    if ( this.state.path !== this.props.path ) {
+      this.append();
+      this.setState( { path: this.props.path } );
+    }
+  }
+
+  render() {
+    return (
+      <MuiThemeProvider>
+        <div className="entryContent textview">
+          <base href={ this.props.path } />
+          {this.content()}
+        </div>
+      </MuiThemeProvider>
+    )
+  }
+}
+
 export class ImageView extends React.Component {
   content() {
     const style = {

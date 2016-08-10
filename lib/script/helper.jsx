@@ -1,6 +1,8 @@
 import path from "path";
 import fs from "fs";
 import filetype from "file-type";
+import languageDetect from "language-detect";
+import highlight from "highlight.js";
 
 let helper = {};
 
@@ -10,6 +12,17 @@ const units = [
   "MB",
   "GB"
 ];
+
+const SUPPORTED = [
+  { type: "pdf",      extname: [ ".pdf" ] },
+  { type: "epub",     extname: [ ".epub" ] },
+  { type: "markdown", extname: [ ".md" ] },
+  { type: "image",    extname: [ ".png" ] },
+  { type: "image",    pattern: /^image/ }
+];
+
+const LANGUAGES = highlight.listLanguages();
+
 
 helper.hashChange = ( self ) => {
   location.hash = self[ "data-hash" ];
@@ -86,18 +99,10 @@ helper.statType = ( filepath ) => {
 };
 
 helper.filetype = ( filepath, callback ) => {
-  const supported = [
-          { type: "pdf",      extname: [ ".pdf" ] },
-          { type: "epub",     extname: [ ".epub" ] },
-          { type: "markdown", extname: [ ".md" ] },
-          { type: "image",    extname: [ ".png" ] },
-          { type: "image",    pattern: /^image/ }
-        ];
-
-  let detected,
+  let detected, lang,
       extname = path.extname( filepath );
 
-  supported.forEach( function( support ) {
+  SUPPORTED.forEach( function( support ) {
     if ( support.extname && support.extname.indexOf( extname ) > -1 ) {
       detected = { type: support.type };
       return false;
@@ -108,27 +113,40 @@ helper.filetype = ( filepath, callback ) => {
     callback( null, detected );
   }
   else {
-    detectFileTypeByRead( filepath, ( filetype ) => {
-      if ( filetype !== null ) {
-        supported.forEach( function( support ) {
-          if ( support.pattern && support.pattern.test( filetype.mime ) ) {
-            detected = filetype;
-            detected.type = support.type;
-            return false;
-          }
-        });
-      }
+    try {
+      lang = languageDetect.sync( filepath ).toLowerCase();
 
-      if ( detected ) {
+      if ( LANGUAGES.indexOf( lang ) ) {
+        detected = { type: "program", lang: lang };
         callback( null, detected );
       }
-      else if ( filetype !== null ) {
-        callback( new Error( "Unsupported file type: " + filetype.mime ) );
-      }
       else {
-        callback( new Error( "Unsupported file type" ) );
+        throw new Error( "not support in highlighter" );
       }
-    });
+    }
+    catch( err ) {
+      detectFileTypeByRead( filepath, ( filetype ) => {
+        if ( filetype !== null ) {
+          SUPPORTED.forEach( function( support ) {
+            if ( support.pattern && support.pattern.test( filetype.mime ) ) {
+              detected = filetype;
+              detected.type = support.type;
+              return false;
+            }
+          });
+        }
+
+        if ( detected ) {
+          callback( null, detected );
+        }
+        else if ( filetype !== null ) {
+          callback( new Error( "Unsupported file type: " + filetype.mime ) );
+        }
+        else {
+          callback( new Error( "Unsupported file type" ) );
+        }
+      });
+    }
   }
 }
 

@@ -31,6 +31,7 @@
     "file-type": "^3.8.0",
     "highlight.js": "^9.5.0",
     "kramed": "^0.5.6",
+    "language-detect": "^1.1.0",
     "material-ui": "^0.15.2",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
