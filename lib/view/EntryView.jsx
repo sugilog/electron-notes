@@ -105,11 +105,10 @@ export class ProgramSourceView extends React.Component {
 
   content() {
     return (
-      <div className="markdown-body">
+      <div style={ { padding: 20 } }>
         <pre>
           <code
             className={"lang-" + this.props.lang}
-            style={ { padding: 10 } }
             dangerouslySetInnerHTML={ { __html: this.state.content } }
           />
         </pre>
@@ -119,19 +118,39 @@ export class ProgramSourceView extends React.Component {
 
   append() {
     const text = fs.readFileSync( this.props.path, "utf8" );
-    this.setState( { content: highlightjs.highlightAuto( text ).value } );
+    this.setState( { content: "\n" + highlightjs.highlightAuto( text ).value } );
+  }
+
+  fill() {
+    let view = document.querySelector( ".textview" ),
+        rect = view.closest( ".main" );
+
+    rect.classList.add( "programview" );
+  }
+
+  unfill() {
+    let view = document.querySelector( ".textview" ),
+        rect = view.closest( ".main" );
+
+    rect.classList.remove( "programview" );
   }
 
   componentDidMount() {
     this.setState( { path: this.props.path } );
     this.append();
+    this.fill();
   }
 
   componentDidUpdate() {
     if ( this.state.path !== this.props.path ) {
       this.append();
       this.setState( { path: this.props.path } );
+      this.fill();
     }
+  }
+
+  componentWillUnmount() {
+    this.unfill();
   }
 
   render() {

@@ -1,0 +1,18 @@
+x-pre {
+  display: block;
+  white-space: pre-wrap;
+  margin-bottom: 1em;
+}
+
+.programview {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  background-color: #f7f7f7;
+}
+
+.programview pre,
+.programview code {
+  line-height: 1.45;
+  word-wrap: normal;
+  font: 13px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}

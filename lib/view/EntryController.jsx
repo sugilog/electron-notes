@@ -51,3 +51,42 @@ export class MarkdownController extends React.Component {
     )
   }
 }
+
+export class ProgramSourceController extends React.Component {
+  entryUrl() {
+    return "#!/open-file?path=" + this.props.path;
+  }
+
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={AppTheme}>
+        <div className="entryConntroller">
+          <FloatingActionButton
+            style={buttonStyle}
+            onTouchTap={
+              function() {
+                shell.openExternal( "file://" + this[ "data-path" ] );
+              }
+            }
+            data-path={this.props.path}
+          >
+            <ModeEditAsset />
+          </FloatingActionButton>
+
+          <FloatingActionButton
+            secondary={true}
+            style={buttonStyle}
+            onTouchTap={
+              function() {
+                helper.hashChange( this );
+              }
+            }
+            data-hash={this.entryUrl()}
+          >
+            <RefreshAsset />
+          </FloatingActionButton>
+        </div>
+      </MuiThemeProvider>
+    )
+  }
+}
