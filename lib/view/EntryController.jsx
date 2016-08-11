@@ -5,6 +5,7 @@ import AppTheme from "./AppTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ModeEditAsset from "material-ui/svg-icons/editor/mode-edit";
+import FolderOpenAsset from "material-ui/svg-icons/file/folder-open";
 import RefreshAsset from "material-ui/svg-icons/navigation/refresh";
 import helper from "../script/helper";
 
@@ -26,7 +27,7 @@ export class MarkdownController extends React.Component {
             style={buttonStyle}
             onTouchTap={
               function() {
-                shell.openExternal( "file://" + this[ "data-path" ] );
+                shell.openItem( this[ "data-path" ] );
               }
             }
             data-path={this.props.path}
@@ -35,7 +36,18 @@ export class MarkdownController extends React.Component {
           </FloatingActionButton>
 
           <FloatingActionButton
-            secondary={true}
+            style={buttonStyle}
+            onTouchTap={
+              function() {
+                shell.showItemInFolder( this[ "data-path" ] );
+              }
+            }
+            data-path={this.props.path}
+          >
+            <FolderOpenAsset />
+          </FloatingActionButton>
+
+          <FloatingActionButton
             style={buttonStyle}
             onTouchTap={
               function() {
@@ -65,7 +77,7 @@ export class ProgramSourceController extends React.Component {
             style={buttonStyle}
             onTouchTap={
               function() {
-                shell.openExternal( "file://" + this[ "data-path" ] );
+                shell.openItem( this[ "data-path" ] );
               }
             }
             data-path={this.props.path}
@@ -74,7 +86,18 @@ export class ProgramSourceController extends React.Component {
           </FloatingActionButton>
 
           <FloatingActionButton
-            secondary={true}
+            style={buttonStyle}
+            onTouchTap={
+              function() {
+                shell.showItemInFolder( this[ "data-path" ] );
+              }
+            }
+            data-path={this.props.path}
+          >
+            <FolderOpenAsset />
+          </FloatingActionButton>
+
+          <FloatingActionButton
             style={buttonStyle}
             onTouchTap={
               function() {
