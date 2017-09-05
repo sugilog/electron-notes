@@ -56,8 +56,8 @@ export class EntryInfo extends React.Component {
         secondaryText={this.secondaryText()}
         secondaryTextLines={2}
         onTouchTap={
-          function() {
-            helper.hashChange( this );
+          function( e ) {
+            helper.hashChange( e.currentTarget );
           }
         }
         data-hash={this.entryUrl()}

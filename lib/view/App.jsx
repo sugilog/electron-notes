@@ -73,9 +73,9 @@ export const MyHeaderLayout = () => (
       label="OPEN"
       style={buttonStyle}
       onTouchTap={
-        function() {    
-          helper.hashChange( this );    
-        }    
+        function( e ) {
+          helper.hashChange( e.currentTarget );
+        }
       }
       data-hash="#!/select-dir"
     />
@@ -83,9 +83,9 @@ export const MyHeaderLayout = () => (
       label="PARENT"
       style={buttonStyle}
       onTouchTap={
-        function() {    
-          helper.hashChange( this );    
-        }    
+        function( e ) {
+          helper.hashChange( e.currentTarget );
+        }
       }
       data-hash="#!/move-parent"
     />
@@ -93,9 +93,9 @@ export const MyHeaderLayout = () => (
       label="NEW"
       style={buttonStyle}
       onTouchTap={
-        function() {    
-          helper.hashChange( this );    
-        }    
+        function( e ) {
+          helper.hashChange( e.currentTarget );
+        }
       }
       data-hash="#!/new-file"
     />

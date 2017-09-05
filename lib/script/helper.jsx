@@ -25,7 +25,7 @@ const LANGUAGES = highlight.listLanguages();
 
 
 helper.hashChange = ( self ) => {
-  location.hash = self[ "data-hash" ];
+  location.hash = self.dataset[ "hash" ];
   return false;
 }
 

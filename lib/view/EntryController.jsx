@@ -50,8 +50,8 @@ export class MarkdownController extends React.Component {
           <FloatingActionButton
             style={buttonStyle}
             onTouchTap={
-              function() {
-                helper.hashChange( this );
+              function( e ) {
+                helper.hashChange( e.currentTarget );
               }
             }
             data-hash={this.entryUrl()}
@@ -100,8 +100,8 @@ export class ProgramSourceController extends React.Component {
           <FloatingActionButton
             style={buttonStyle}
             onTouchTap={
-              function() {
-                helper.hashChange( this );
+              function( e ) {
+                helper.hashChange( e.currentTarget );
               }
             }
             data-hash={this.entryUrl()}
